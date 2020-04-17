@@ -1,6 +1,6 @@
 vector_nightly: no
-add_vector_docker_group: no
-add_vector_journal_group: no
+add_vector_docker_group: no # Add vector user to "docker" group
+add_vector_journal_group: no # Add vector user to "systemd-journal" group
 
 sources:
   journald:
