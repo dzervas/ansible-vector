@@ -1,0 +1,14 @@
+vector_nightly: no
+add_vector_docker_group: no
+add_vector_journal_group: no
+
+sources:
+  journald:
+    type: journald
+    current_boot_only: true
+
+sinks:
+  vector:
+    type: vector
+    inputs: ["journald"]
+    address: "vector.example.com:9000"

@@ -1,0 +1,40 @@
+- name: Download Vector deb
+  get_url:
+    url: "https://packages.timber.io/vector{% if (vector_nightly | default(no)) %}/nightly{% endif %}/latest/vector-amd64.deb"
+    dest: "/tmp/vector{% if (vector_nightly | default(no)) %}-nightly{% endif %}-amd64.deb"
+    mode: 755
+
+- name: Install Vector
+  apt:
+    deb: "/tmp/vector{% if (vector_nightly | default(no)) %}-nightly{% endif %}-amd64.deb"
+    install_recommends: yes
+  notify:
+    - restart vector
+
+- name: Copy config
+  template:
+    src: templates/vector.toml.j2
+    dest: /etc/vector/vector.toml
+  notify: restart vector
+
+- name: Add vector user to docker group
+  user:
+    name: vector
+    groups: docker
+    append: yes
+  when: add_vector_docker_group | default(no)
+  notify: restart vector
+
+- name: Add vector user to systemd-journal group
+  user:
+    name: vector
+    groups: systemd-journal
+    append: yes
+  when: add_vector_journal_group | default(no)
+  notify: restart vector
+
+- name: Start Vector
+  service:
+    state: started
+    enabled: yes
+    name: vector

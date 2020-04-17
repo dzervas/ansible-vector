@@ -1,0 +1,5 @@
+- name: restart vector
+  service:
+    state: restarted
+    daemon_reload: yes
+    name: vector

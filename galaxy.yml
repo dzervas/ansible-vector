@@ -1,0 +1,16 @@
+---
+
+namespace: dzervas
+name: vector
+readme: README.md
+authors:
+  - Dimitris Zervas <dzervas@dzervas.gr>
+description: vector.dev ansible role
+license_file: LICENSE
+tags:
+  - vector
+  - logging
+  - monitoring
+repository: https://github.com/dzervas/ansible-vector
+documentation: https://github.com/dzervas/ansible-vector
+issues: https://github.com/dzervas/ansible-vector/issues
