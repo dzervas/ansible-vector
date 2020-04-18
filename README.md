@@ -1,3 +1,5 @@
+![publish](https://github.com/dzervas/ansible-vector/workflows/publish/badge.svg)
+
 # Vector ansible role
 
 This is an ansible role to set up [vector](https://vector.dev).

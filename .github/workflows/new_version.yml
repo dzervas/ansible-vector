@@ -1,6 +1,6 @@
 ---
 
-name: Deploy new galaxy version
+name: publish
 
 on:
   create:
