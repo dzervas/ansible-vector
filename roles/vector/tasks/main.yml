@@ -12,6 +12,7 @@
   template:
     src: templates/vector.toml.j2
     dest: /etc/vector/vector.toml
+    mode: 0644
   notify: restart vector
 
 - name: Add vector user to docker group
