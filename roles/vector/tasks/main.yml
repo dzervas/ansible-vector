@@ -1,15 +1,12 @@
-- name: Download Vector deb
-  get_url:
-    url: "https://packages.timber.io/vector{% if (vector_nightly | default(no)) %}/nightly{% endif %}/latest/vector-amd64.deb"
-    dest: "/tmp/vector{% if (vector_nightly | default(no)) %}-nightly{% endif %}-amd64.deb"
-    mode: 755
-
 - name: Install Vector
   apt:
-    deb: "/tmp/vector{% if (vector_nightly | default(no)) %}-nightly{% endif %}-amd64.deb"
+    deb: "https://packages.timber.io/vector/{{ version }}/vector-{{ arch }}.deb"
     install_recommends: yes
   notify:
     - restart vector
+  vars:
+    version: "{{ vector_nightly | ternary('nightly/latest','latest') }}"
+    arch: "{{ vector_debian_arch[ansible_machine] }}"
 
 - name: Copy config
   template:
