@@ -27,5 +27,8 @@ jobs:
       - name: Lint
         run: |
           ansible-lint roles/vector
+      - name: Test
+        run: |
+          cd roles/vector && molecule test
 
 

@@ -1,0 +1,13 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Execute vector
+    command: vector --version
+    changed_when: false
+    register: vector_version_rc
+  - name: Assert vector is installed
+    assert:
+      that:
+        - vector_version_rc is success
