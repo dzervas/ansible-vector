@@ -1,5 +1,5 @@
 ---
-name: lint
+name: Tests
 
 on: 
   - push
@@ -24,9 +24,6 @@ jobs:
           pip3 install -r requirements-tests.txt
           ansible --version
           ansible-lint --version
-      - name: Lint
-        run: |
-          ansible-lint roles/vector
       - name: Test
         run: |
           cd roles/vector && molecule test

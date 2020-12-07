@@ -3,6 +3,11 @@ dependency:
   name: galaxy
 driver:
   name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
   - name: debian10
     image: jrei/systemd-debian:10
