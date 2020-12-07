@@ -3,9 +3,8 @@
 name: publish
 
 on:
-  create:
-    tags:
-      - v*
+  release:
+    types: [published]
 
 jobs:
   deploy:
@@ -15,7 +14,7 @@ jobs:
 
       # Sets RELEASE_VERSION to be refs/tags/v<version> -> <version>
       - name: Get the version from the tag
-        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF#refs/tags/v})
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
       - name: Upload to ansible-galaxy
         uses: artis3n/ansible_galaxy_collection@v2
