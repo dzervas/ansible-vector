@@ -2,3 +2,7 @@ vector_debian_arch:
   armv7l: armhf
   aarch64: arm64
   x86_64: amd64
+vector_redhat_arch:
+  armv7l: armv7hl
+  aarch64: aarch64
+  x86_64: x86_64

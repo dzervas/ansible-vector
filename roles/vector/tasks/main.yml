@@ -1,4 +1,4 @@
-- name: Install Vector
+- name: Install Vector (Debian)
   apt:
     deb: "https://packages.timber.io/vector/{{ version }}/vector-{{ arch }}.deb"
     install_recommends: yes
@@ -7,6 +7,19 @@
   vars:
     version: "{{ vector_nightly | ternary('nightly/latest','latest') }}"
     arch: "{{ vector_debian_arch[ansible_machine] }}"
+  when: ansible_os_family == 'Debian'
+
+- name: Install Vector (RedHat)
+  yum:
+    name: "https://packages.timber.io/vector/{{ version }}/vector-{{ arch }}.rpm"
+    state: present
+    disable_gpg_check: yes # package is not signed
+  notify:
+    - restart vector
+  vars:
+    version: "{{ vector_nightly | ternary('nightly/latest','latest') }}"
+    arch: "{{ vector_redhat_arch[ansible_machine] }}"
+  when: ansible_os_family == 'RedHat'
 
 - name: Copy config
   template:
