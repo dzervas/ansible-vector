@@ -5,3 +5,5 @@
     - name: "Include vector"
       include_role:
         name: "vector"
+      vars:
+        vector_version: 0.11.1
