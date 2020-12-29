@@ -7,11 +7,11 @@ data_dir = "/var/lib/vector"
     "sinks": (sinks | default({}))
 } %}
 
-{% for name, cat in loop_helper.items() %}
-{% for key, value in cat.items() %}
+{% for name, cat in loop_helper.items() | sort(attribute='0') %}
+{% for key, value in cat.items() | sort(attribute='0') %}
 [{{ name }}.{{ key }}]
   {% if value %}
-  {%- for skey, svalue in value.items() %}
+  {%- for skey, svalue in value.items() | sort(attribute='0') %}
   {{ skey }} = {{ svalue | tojson }}
   {% endfor %}
   {%- endif %}
