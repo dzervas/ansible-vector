@@ -7,7 +7,14 @@
     command: vector --version
     changed_when: false
     register: vector_version_rc
+  - name: Check grok pattern is not mangled
+    lineinfile:
+      path: /etc/vector/vector.toml
+      line: '    pattern = "(?<capture>\\d+)%{GREEDYDATA}"'
+    diff: true
+    register: grok_pattern_rc
   - name: Assert vector is installed
     assert:
       that:
         - vector_version_rc is success
+        - grok_pattern_rc is not changed
