@@ -8,6 +8,12 @@ sources:
     type: journald
     current_boot_only: true
 
+transforms:
+  grok:
+    type: grok_parser
+    inputs:
+      - journald
+    pattern: '(?<capture>\\d+)%{GREEDYDATA}'
 sinks:
   vector:
     type: vector
