@@ -1,3 +1,16 @@
+# Workaround for latest version being named against a version number
+- name: Get latest version
+  uri:
+    url: https://s3.amazonaws.com/packages.timber.io/?prefix=vector/latest&max-keys=1
+    return_content: true
+  register: bucket_content
+  when: vector_version == "latest"
+
+- name: Set latest version
+  set_fact:
+    vector_version: "{{ bucket_content.content | regex_replace('.*\\n.*<Key>[^-]+-(?P<version>[\\d\\.]+)-.*','\\g<version>') }}"
+  when: vector_version == "latest"
+
 - name: Install Vector (Debian)
   apt:
     deb: "https://packages.timber.io/vector/{{ version }}/vector-{{ version }}-{{ arch }}.deb"
