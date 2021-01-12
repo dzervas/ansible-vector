@@ -5,6 +5,7 @@ name: vector
 readme: README.md
 authors:
   - Dimitris Zervas <dzervas@dzervas.gr>
+  - Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
 description: vector.dev ansible role
 license_file: LICENSE
 tags:
