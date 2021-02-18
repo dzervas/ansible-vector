@@ -1,3 +1,4 @@
+vector_template: vector.toml.j2
 vector_nightly: no
 vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
 add_vector_docker_group: no # Add vector user to "docker" group
