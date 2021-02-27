@@ -3,7 +3,6 @@
 namespace: dzervas
 name: vector
 readme: README.md
-version: 0.1.4a
 authors:
   - Dimitris Zervas <dzervas@dzervas.gr>
   - Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
