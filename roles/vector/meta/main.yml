@@ -2,6 +2,7 @@
 
 galaxy_info:
   role_name: vector
+  namespace: dzervas
   author: Dimitris Zervas <dzervas@dzervas.gr>
   description: vector.dev ansible role
   license: MIT
