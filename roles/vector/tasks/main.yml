@@ -38,7 +38,7 @@
 - name: Copy config
   template:
     src: "{{ vector_template }}"
-    dest: /etc/vector/vector.toml
+    dest: "{{ vector_config_file }}"
     mode: 0644
   notify: restart vector
 
