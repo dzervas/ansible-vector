@@ -37,8 +37,8 @@
 
 - name: Copy config
   template:
-    src: templates/vector.toml.j2
-    dest: /etc/vector/vector.toml
+    src: "{{ vector_template }}"
+    dest: "{{ vector_config_file }}"
     mode: 0644
   notify: restart vector
 
