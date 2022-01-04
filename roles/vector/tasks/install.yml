@@ -1,0 +1,46 @@
+---
+- block:
+    # Workaround for latest version being named against a version number
+    - name: Get latest version
+      uri:
+        url: https://s3.amazonaws.com/packages.timber.io/?prefix=vector/latest&max-keys=1
+        return_content: true
+      register: bucket_content
+      when: vector_version == "latest"
+
+    - name: Set latest version
+      set_fact:
+        vector_version: "{{ bucket_content.content | regex_replace('.*\\n.*<Key>[^-]+-(?P<version>[\\d\\.]+)-.*','\\g<version>') }}"
+      when: vector_version == "latest"
+
+    - name: Install Vector (Debian)
+      apt:
+        deb: "https://packages.timber.io/vector/{{ version }}/vector-{{ version }}-{{ arch }}.deb"
+        install_recommends: true
+      notify:
+        - restart vector
+      vars:
+        version: "{{ (vector_version == 'nightly')| bool | ternary('nightly/latest', vector_version) }}"
+        arch: "{{ vector_debian_arch[ansible_machine] }}"
+      when: ansible_os_family == 'Debian'
+
+    - name: Install Vector (RedHat)
+      yum:
+        name: "https://packages.timber.io/vector/{{ version }}/vector-{{ package_version }}.{{ arch }}.rpm"
+        state: present
+        disable_gpg_check: true # package is not signed
+      notify:
+        - restart vector
+      vars:
+        version: "{{ (vector_version == 'nightly')| bool | ternary('nightly/latest', vector_version) }}"
+        package_version: "{{ vector_version is match('latest') | ternary(vector_version, vector_version ~ '-1') }}"
+        arch: "{{ vector_redhat_arch[ansible_machine] }}"
+      when: ansible_os_family == 'RedHat'
+  when: vector_install_from_repo == false
+
+- block:
+    - name: Install vector
+      package:
+        name: vector
+        state: present
+  when: vector_install_from_repo == true
