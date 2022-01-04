@@ -19,7 +19,7 @@
   yum_repository:
     name: timber-vector
     description: "Official repository for Timber / vector"
-    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    baseurl: https://repositories.timber.io/public/vector/rpm/el/$releasever/$basearch
     gpgcheck: true
     gpgkey: https://repositories.timber.io/public/vector/gpg.3543DB2D0A2BC4B8.key
   when: ansible_os_family == "RedHat"
