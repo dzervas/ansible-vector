@@ -1,9 +1,10 @@
 vector_template: vector.toml.j2
 vector_config_file: /etc/vector/vector.toml
-vector_nightly: no
+vector_nightly: false
 vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
-add_vector_docker_group: no # Add vector user to "docker" group
-add_vector_journal_group: no # Add vector user to "systemd-journal" group
+add_vector_docker_group: false
+add_vector_journal_group: false
+vector_install_from_repo: false
 
 sources:
   journald:

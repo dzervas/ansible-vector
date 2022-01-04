@@ -1,65 +1,11 @@
-# Workaround for latest version being named against a version number
-- name: Get latest version
-  uri:
-    url: https://s3.amazonaws.com/packages.timber.io/?prefix=vector/latest&max-keys=1
-    return_content: true
-  register: bucket_content
-  when: vector_version == "latest"
+---
 
-- name: Set latest version
-  set_fact:
-    vector_version: "{{ bucket_content.content | regex_replace('.*\\n.*<Key>[^-]+-(?P<version>[\\d\\.]+)-.*','\\g<version>') }}"
-  when: vector_version == "latest"
+- name: Create repos for debian or redhat based systems
+  include_tasks: repo.yml
+  when: vector_install_from_repo | bool
 
-- name: Install Vector (Debian)
-  apt:
-    deb: "https://packages.timber.io/vector/{{ version }}/vector-{{ version }}-{{ arch }}.deb"
-    install_recommends: yes
-  notify:
-    - restart vector
-  vars:
-    version: "{{ (vector_version == 'nightly')| bool | ternary('nightly/latest', vector_version) }}"
-    arch: "{{ vector_debian_arch[ansible_machine] }}"
-  when: ansible_os_family == 'Debian'
+- name: Install vector
+  include_tasks: install.yml
 
-- name: Install Vector (RedHat)
-  yum:
-    name: "https://packages.timber.io/vector/{{ version }}/vector-{{ package_version }}.{{ arch }}.rpm"
-    state: present
-    disable_gpg_check: yes # package is not signed
-  notify:
-    - restart vector
-  vars:
-    version: "{{ (vector_version == 'nightly')| bool | ternary('nightly/latest', vector_version) }}"
-    package_version: "{{ vector_version is match('latest') | ternary(vector_version, vector_version ~ '-1') }}"
-    arch: "{{ vector_redhat_arch[ansible_machine] }}"
-  when: ansible_os_family == 'RedHat'
-
-- name: Copy config
-  template:
-    src: "{{ vector_template }}"
-    dest: "{{ vector_config_file }}"
-    mode: 0644
-  notify: restart vector
-
-- name: Add vector user to docker group
-  user:
-    name: vector
-    groups: docker
-    append: yes
-  when: add_vector_docker_group | default(no)
-  notify: restart vector
-
-- name: Add vector user to systemd-journal group
-  user:
-    name: vector
-    groups: systemd-journal
-    append: yes
-  when: add_vector_journal_group | default(no)
-  notify: restart vector
-
-- name: Start Vector
-  service:
-    state: started
-    enabled: yes
-    name: vector
+- name: Create configuration for vector
+  include_tasks: config.yml

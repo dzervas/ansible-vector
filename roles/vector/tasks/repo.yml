@@ -1,0 +1,25 @@
+---
+
+- block:
+    - name: Add vector gpg key to apt
+      become: true
+      apt_key:
+        url: https://repositories.timber.io/public/vector/gpg.3543DB2D0A2BC4B8.key
+        state: present
+
+    - name: Add vector repository for Debian based distributions
+      become: true
+      apt_repository:
+        repo: "deb https://repositories.timber.io/public/vector/deb/{{ ansible_distribution | lower }} {{ ansible_lsb.codename | lower }} main"
+        state: present
+        filename: timber-vector
+  when: ansible_os_family == "Debian"
+
+- name: Add vector repository for RedHat based distributions
+  yum_repository:
+    name: timber-vector
+    description: "Official repository for Timber / vector"
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: true
+    gpgkey: https://repositories.timber.io/public/vector/gpg.3543DB2D0A2BC4B8.key
+  when: ansible_os_family == "RedHat"

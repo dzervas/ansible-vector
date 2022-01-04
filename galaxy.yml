@@ -7,6 +7,8 @@ authors:
   - Dimitris Zervas <dzervas@dzervas.gr>
   - Gaëtan Duchaussois <gaetan.duchaussois@fretlink.com>
   - Dylan Humphreys <dylanjhumphreys@gmail.com>
+  - Daniel Uhlmann <Daniel.Uhlmann@t-systems.com>
+  - Christopher Grau <Christopher.Grau@t-systems.com>
 description: vector.dev ansible role
 license_file: LICENSE
 tags:
