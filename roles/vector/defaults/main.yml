@@ -5,20 +5,3 @@ vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
 add_vector_docker_group: false
 add_vector_journal_group: false
 vector_install_from_repo: false
-
-sources:
-  journald:
-    type: journald
-    current_boot_only: true
-
-transforms:
-  grok:
-    type: grok_parser
-    inputs:
-      - journald
-    pattern: '(?<capture>\\d+)%{GREEDYDATA}'
-sinks:
-  vector:
-    type: vector
-    inputs: ["journald"]
-    address: "vector.example.com:9000"
