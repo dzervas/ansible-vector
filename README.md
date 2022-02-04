@@ -16,7 +16,6 @@ Currently only amd64, arch64, arch7 through deb and rpm packages are supported
 | vector_nightly | no | false | use vector nightly build
 | add_vector_docker_group | no | false | add user vector to group docker
 | add_vector_journal_group | no | false | add user vector to group systemd-journal
-| add_vector_journal_group | no | false | add user vector to group systemd-journal
 | vector_install_from_repo | no | false | whether to install vector from packages or install from deb or redhat based repositories
 | sources | yes | false | ingest observability data from a wide variety of targets [link](https://vector.dev/docs/reference/configuration/sources/)
 | transforms | no | false | shape your data as it moves through your Vector topology [link](https://vector.dev/docs/reference/configuration/transforms/)
