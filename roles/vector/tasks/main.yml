@@ -13,7 +13,7 @@
 
 - name: Install Vector (Debian)
   apt:
-    deb: "https://packages.timber.io/vector/{{ version }}/vector-{{ version }}-{{ arch }}.deb"
+    deb: "https://packages.timber.io/vector/{{ version }}/vector_{{ version }}-1_{{ arch }}.deb"
     install_recommends: yes
   notify:
     - restart vector
