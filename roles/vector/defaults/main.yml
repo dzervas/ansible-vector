@@ -9,7 +9,6 @@ sources:
   journald:
     type: journald
     current_boot_only: true
-
 transforms:
   grok:
     type: grok_parser
@@ -17,7 +16,8 @@ transforms:
       - journald
     pattern: '(?<capture>\\d+)%{GREEDYDATA}'
 sinks:
-  vector:
-    type: vector
-    inputs: ["journald"]
-    address: "vector.example.com:9000"
+  console:
+    type: console
+    encoding.codec: json
+    inputs:
+      - grok

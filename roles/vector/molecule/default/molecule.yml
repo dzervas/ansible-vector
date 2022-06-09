@@ -45,8 +45,8 @@ platforms:
       - /tmp
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: centos8
-    image: jrei/systemd-centos:8
+  - name: rocky8
+    image: rockylinux:8
     privileged: true
     command: /usr/sbin/init
     tmpfs:
