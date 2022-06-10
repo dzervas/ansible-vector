@@ -1,0 +1,33 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include vector"
+      include_role:
+        name: "vector"
+      vars:
+        vector_template: vector.yaml.j2
+        vector_config_file: /etc/vector/vector.yaml
+        sources:
+          journald:
+            type: journald
+            current_boot_only: true
+          tcp:
+            type: socket
+            mode: tcp
+            address: 0.0.0.0:6000
+            encoding:
+              codec: json
+        transforms:
+          grok:
+            type: grok_parser
+            inputs:
+              - journald
+            pattern: '(?<capture>\\d+)%{GREEDYDATA}'
+        sinks:
+          console:
+            type: console
+            encoding:
+              codec: json
+            inputs:
+              - grok

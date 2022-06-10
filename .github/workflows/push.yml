@@ -28,6 +28,6 @@ jobs:
           ansible-lint --version
       - name: Test
         run: |
-          cd roles/vector && molecule test
+          cd roles/vector && molecule test --all
 
 

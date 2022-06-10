@@ -1,0 +1,33 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  tasks:
+  - name: Install netstat
+    yum:
+      name:
+        - net-tools
+        - procps
+      state: present
+    when: ansible_os_family == 'RedHat'
+  - name: Install netstat
+    apt:
+      name: 
+        - net-tools
+        - procps
+      state: present
+      update_cache: yes
+    when: ansible_os_family == 'Debian'
+  - name: Execute vector
+    command: vector --version
+    changed_when: false
+    register: vector_version_rc
+  - name: Check port 6000 is open
+    community.general.listen_ports_facts:
+  - name: Assert vector is installed
+    assert:
+      that:
+        - vector_version_rc is success
+        - 6000 in open_ports
+    vars:
+      open_ports: "{{ ansible_facts.tcp_listen | map(attribute='port') }}"
