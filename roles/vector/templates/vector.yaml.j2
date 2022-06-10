@@ -1,0 +1,7 @@
+{{ vector_general_config | default("") }}
+sources:
+  {{ sources | to_nice_yaml | indent(2) }}
+transforms:
+  {{ transforms | to_nice_yaml | indent(2) }}
+sinks:
+  {{ sinks | to_nice_yaml | indent(2) }}
