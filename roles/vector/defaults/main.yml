@@ -5,23 +5,4 @@ vector_version: "{{ vector_nightly | ternary('nightly','latest') }}"
 add_vector_docker_group: false
 add_vector_journal_group: false
 vector_install_from_repo: false
-<<<<<<< HEAD
 
-sources:
-  journald:
-    type: journald
-    current_boot_only: true
-transforms:
-  grok:
-    type: grok_parser
-    inputs:
-      - journald
-    pattern: '(?<capture>\\d+)%{GREEDYDATA}'
-sinks:
-  console:
-    type: console
-    encoding.codec: json
-    inputs:
-      - grok
-=======
->>>>>>> 5f2c462 (moved sources,transforms and sinks from defaults to converge.yml)
