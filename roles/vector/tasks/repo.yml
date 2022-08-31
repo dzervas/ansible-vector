@@ -10,7 +10,7 @@
     - name: Add vector repository for Debian based distributions
       become: true
       apt_repository:
-        repo: "{{ vector_repo[ansible_os_family] }}"
+        repo: "{{ vector_repo }}"
         state: present
         filename: timber-vector
   when: ansible_os_family == "Debian"
@@ -19,7 +19,7 @@
   yum_repository:
     name: timber-vector
     description: "Official repository for Timber / vector"
-    baseurl: "{{ vector_repo[ansible_os_family] }}"
+    baseurl: "{{ vector_repo }}"
     gpgcheck: true
     gpgkey: "{{ vector_repo_key }}"
   when: ansible_os_family == "RedHat"
