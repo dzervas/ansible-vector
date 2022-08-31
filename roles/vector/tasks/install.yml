@@ -41,6 +41,6 @@
 - block:
     - name: Install vector
       package:
-        name: vector
+        name: "{{ vector_package }}"
         state: present
   when: vector_install_from_repo == true
