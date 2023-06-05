@@ -13,11 +13,11 @@ data_dir = "/var/lib/vector"
   {% if value %}
   {%- for skey, svalue in value.items() | sort(attribute='0') %}
 {%- if svalue is string %}
-  {%- if '\n' in svalue -%}
+  {%- if '\n' in svalue %}
   {{ skey }} = """{{ svalue }}"""
-  {%- else %}
+{% else %}
   {{ skey }} = "{{ svalue }}"
-  {%- endif %}
+{% endif %}
 {% else %}
   {{ skey }} = {{ svalue | tojson }}
 {% endif %}
