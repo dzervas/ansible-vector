@@ -1,7 +1,9 @@
 {{ vector_general_config | default("") }}
 sources:
   {{ sources | to_nice_yaml | indent(2) }}
+{% if transforms is defined %}
 transforms:
   {{ transforms | to_nice_yaml | indent(2) }}
+{% endif %}
 sinks:
   {{ sinks | to_nice_yaml | indent(2) }}
