@@ -1,6 +1,22 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    sources:
+      journald:
+        type: journald
+        current_boot_only: true
+    transforms:
+      grok:
+        type: grok_parser
+        inputs:
+          - journald
+        pattern: '(?<capture>\\d+)%{GREEDYDATA}'
+    sinks:
+      vector:
+        type: vector
+        inputs: ["journald"]
+        address: "vector.example.com:9000"
   tasks:
     - name: "Include vector"
       include_role:

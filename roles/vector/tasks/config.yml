@@ -1,0 +1,29 @@
+---
+- name: Copy config
+  template:
+    src: "{{ vector_template }}"
+    dest: "{{ vector_config_file }}"
+    mode: 0644
+  notify: restart vector
+
+- name: Add vector user to docker group
+  user:
+    name: vector
+    groups: docker
+    append: true
+  when: add_vector_docker_group | bool
+  notify: restart vector
+
+- name: Add vector user to systemd-journal group
+  user:
+    name: vector
+    groups: systemd-journal
+    append: true
+  when: add_vector_journal_group | bool
+  notify: restart vector
+
+- name: Start vector
+  service:
+    state: started
+    enabled: true
+    name: vector
