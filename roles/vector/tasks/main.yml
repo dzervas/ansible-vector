@@ -13,7 +13,7 @@
 
 - name: Install Vector (Debian)
   apt:
-    deb: "https://packages.timber.io/vector/{{ version }}/vector_{{ version }}-1_{{ arch }}.deb"
+    deb: "https://packages.vector.dev/vector/{{ version }}/vector_{{ version }}-1_{{ arch }}.deb"
     install_recommends: yes
   notify:
     - restart vector
@@ -24,7 +24,7 @@
 
 - name: Install Vector (RedHat)
   yum:
-    name: "https://packages.timber.io/vector/{{ version }}/vector-{{ package_version }}.{{ arch }}.rpm"
+    name: "https://packages.vector.dev/vector/{{ version }}/vector-{{ package_version }}.{{ arch }}.rpm"
     state: present
     disable_gpg_check: yes # package is not signed
   notify:
